@@ -1,0 +1,126 @@
+@use '../mixins' as *;
+
+.button {
+  @include button-reset;
+  padding: $spacing-md $spacing-xl;
+  border-radius: $radius-lg;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all $transition-base;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  // Primary Button
+  &--primary {
+    background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+    color: white;
+    box-shadow: $shadow-3d;
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: $shadow-3d-hover;
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // Secondary Button
+  &--secondary {
+    background: linear-gradient(135deg, $secondary 0%, $secondary-light 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(20, 184, 166, 0.2);
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(20, 184, 166, 0.3);
+    }
+  }
+  
+  // Outline Button
+  &--outline {
+    background: white;
+    color: $primary;
+    border: 2px solid $primary;
+    
+    &:hover:not(:disabled) {
+      background: $primary;
+      color: white;
+    }
+  }
+  
+  // Ghost Button
+  &--ghost {
+    background: transparent;
+    color: $primary;
+    
+    &:hover:not(:disabled) {
+      background: rgba($primary, 0.1);
+    }
+  }
+  
+  // Danger Button
+  &--danger {
+    background: $error;
+    color: white;
+    box-shadow: 0 10px 30px rgba($error, 0.2);
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba($error, 0.3);
+    }
+  }
+  
+  // Sizes
+  &--small {
+    padding: $spacing-sm $spacing-md;
+    font-size: 0.875rem;
+  }
+  
+  &--large {
+    padding: $spacing-lg $spacing-2xl;
+    font-size: 1.125rem;
+  }
+  
+  // Full Width
+  &--full {
+    width: 100%;
+  }
+  
+  // Loading State
+  &--loading {
+    pointer-events: none;
+    
+    .button__spinner {
+      @include spinner(18px, currentColor);
+    }
+  }
+}

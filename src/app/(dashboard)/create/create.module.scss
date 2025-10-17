@@ -1,0 +1,24 @@
+@use '../../../styles/mixins' as *;
+
+.create {
+  min-height: calc(100vh - 200px);
+  padding: $spacing-2xl 0;
+  
+  &__container {
+    @include container;
+    max-width: 900px;
+  }
+  
+  &__title {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+  }
+  
+  &__actions {
+    @include flex-between;
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-xl;
+    border-top: 1px solid #e5e7eb;
+    gap: $spacing-md;
+  }
+}

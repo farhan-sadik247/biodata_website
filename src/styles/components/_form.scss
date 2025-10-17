@@ -1,0 +1,521 @@
+@use '../mixins' as *;
+@use 'sass:color';
+
+.form {
+  &__group {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-weight: 500;
+    color: $text-primary;
+    font-size: 0.875rem;
+    
+    &--required::after {
+      content: ' *';
+      color: $error;
+    }
+  }
+  
+  &__input {
+    @include input-reset;
+    border: 2px solid #e5e7eb;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+    font-size: 1rem;
+    
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    }
+    
+    &--error {
+      border-color: $error;
+      
+      &:focus {
+        box-shadow: 0 0 0 3px rgba($error, 0.1);
+      }
+    }
+    
+    &:disabled {
+      background: #f3f4f6;
+      cursor: not-allowed;
+    }
+  }
+  
+  &__error {
+    color: $error;
+    font-size: 0.875rem;
+    margin-top: $spacing-xs;
+    display: block;
+  }
+  
+  &__helper {
+    color: $text-light;
+    font-size: 0.875rem;
+    margin-top: $spacing-xs;
+    display: block;
+  }
+  
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+    
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    &--three {
+      @media (min-width: $breakpoint-lg) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+  
+  &__array {
+    &-item {
+      @include card-3d;
+      padding: $spacing-lg;
+      margin-bottom: $spacing-md;
+      position: relative;
+    }
+    
+    &-remove {
+      position: absolute;
+      top: $spacing-md;
+      right: $spacing-md;
+      background: $error;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      @include flex-center;
+      transition: all $transition-fast;
+      
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid $primary;
+    display: inline-block;
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23334155' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: #f1f5f9;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+}
+
+// Address Selector
+.address-selector {
+  margin-bottom: $spacing-xl;
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+  border-radius: $radius-lg;
+  border: 1px solid rgba($primary, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+// Progress Indicator - Ultra Modern 3D Design
+.progress {
+  &__container {
+    margin-bottom: $spacing-xl;
+    padding: $spacing-lg $spacing-md;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(248, 250, 252, 0.98) 50%,
+      rgba(241, 245, 249, 0.95) 100%
+    );
+    border-radius: 20px;
+    box-shadow: 
+      0 8px 30px rgba(0, 0, 0, 0.06),
+      0 3px 12px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: visible;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    
+    // Decorative top accent
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        $primary 0%,
+        color.adjust($primary, $lightness: 15%) 33%,
+        $secondary 66%,
+        color.adjust($secondary, $lightness: 15%) 100%
+      );
+      border-radius: 20px 20px 0 0;
+      opacity: 0.8;
+    }
+    
+    // Subtle glow effect
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, rgba($primary, 0.1), rgba($secondary, 0.1));
+      border-radius: 24px;
+      z-index: -1;
+      filter: blur(20px);
+      opacity: 0.5;
+    }
+  }
+  
+  &__steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: $spacing-md 0;
+    gap: $spacing-xs;
+    
+    // 3D Track with realistic depth
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 10%;
+      right: 10%;
+      height: 6px;
+      background: 
+        linear-gradient(180deg, 
+          rgba(203, 213, 225, 0.8) 0%,
+          rgba(226, 232, 240, 1) 50%,
+          rgba(241, 245, 249, 0.9) 100%
+        );
+      border-radius: 8px;
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.12),
+        inset 0 1px 2px rgba(0, 0, 0, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.8);
+      z-index: 0;
+    }
+  }
+  
+  &__line {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10%;
+    height: 6px;
+    background: 
+      linear-gradient(90deg, 
+        $primary 0%, 
+        color.adjust($primary, $lightness: 8%) 30%,
+        color.adjust($primary, $lightness: 15%) 50%,
+        color.adjust($secondary, $lightness: 10%) 70%,
+        $secondary 100%
+      );
+    border-radius: 8px;
+    transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1;
+    box-shadow: 
+      0 3px 10px rgba($primary, 0.4),
+      0 2px 6px rgba($primary, 0.25),
+      0 6px 20px rgba($primary, 0.15),
+      inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    position: relative;
+    overflow: hidden;
+    
+    // Animated shimmer effect
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 100%
+      );
+      animation: shimmer 2s infinite;
+    }
+    
+    // Glossy top highlight
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent);
+      border-radius: 8px 8px 0 0;
+    }
+  }
+  
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    padding-top: $spacing-xs;
+    
+    &:hover {
+      transform: translateY(-3px);
+    }
+    
+    &-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: 
+        linear-gradient(135deg, 
+          #ffffff 0%, 
+          #f8fafc 50%,
+          #f1f5f9 100%
+        );
+      border: 3px solid #e2e8f0;
+      @include flex-center;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: $spacing-sm;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      
+      // Enhanced 3D base shadow
+      box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.1),
+        0 3px 6px rgba(0, 0, 0, 0.06),
+        0 1px 3px rgba(0, 0, 0, 0.04),
+        inset 0 1px 3px rgba(255, 255, 255, 0.9),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.05);
+      
+      // Inner radial glow
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 35%, 
+          rgba(255, 255, 255, 0.9) 0%,
+          rgba(255, 255, 255, 0.4) 40%,
+          transparent 70%
+        );
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+      }
+      
+      // Animated outer ring
+      &::after {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        transition: all 0.4s ease;
+        opacity: 0;
+      }
+    }
+    
+    &-label {
+      font-size: 0.7rem;
+      color: $text-light;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      position: relative;
+      white-space: nowrap;
+      
+      @media (min-width: $breakpoint-md) {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+      
+      // Subtle underline effect
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: $primary;
+        transition: width 0.3s ease;
+        border-radius: 2px;
+      }
+    }
+    
+    // ACTIVE STEP - Ultra Premium Effect
+    &--active &-circle {
+      background: 
+        linear-gradient(135deg, 
+          color.adjust($primary, $lightness: 10%) 0%, 
+          $primary 50%,
+          color.adjust($primary, $lightness: -8%) 100%
+        );
+      color: white;
+      border-color: color.adjust($primary, $lightness: 20%);
+      transform: scale(1.15) translateY(-4px);
+      box-shadow: 
+        0 12px 36px rgba($primary, 0.45),
+        0 6px 18px rgba($primary, 0.35),
+        0 3px 10px rgba($primary, 0.25),
+        0 1px 4px rgba($primary, 0.15),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 0 6px rgba($primary, 0.08);
+      animation: activeGlow 2s ease-in-out infinite;
+      
+      &::before {
+        opacity: 1;
+        background: radial-gradient(
+          circle at 30% 30%, 
+          rgba(255, 255, 255, 0.6) 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 70%
+        );
+      }
+      
+      &::after {
+        border-color: rgba($primary, 0.4);
+        inset: -12px;
+        opacity: 1;
+        animation: ripplePulse 2.5s ease-out infinite;
+      }
+    }
+    
+    // COMPLETED STEP - Success State
+    &--completed &-circle {
+      background: 
+        linear-gradient(135deg, 
+          color.adjust($success, $lightness: 10%) 0%, 
+          $success 50%,
+          color.adjust($success, $lightness: -8%) 100%
+        );
+      color: white;
+      border-color: color.adjust($success, $lightness: 20%);
+      transform: scale(1.08);
+      box-shadow: 
+        0 10px 30px rgba($success, 0.35),
+        0 5px 15px rgba($success, 0.25),
+        0 2px 8px rgba($success, 0.15),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+      
+      &::before {
+        opacity: 0.9;
+        background: radial-gradient(
+          circle at 30% 30%, 
+          rgba(255, 255, 255, 0.5) 0%,
+          transparent 60%
+        );
+      }
+      
+      &::after {
+        border-color: rgba($success, 0.25);
+        inset: -4px;
+        opacity: 0.5;
+      }
+    }
+    
+    // Label enhancements
+    &--active &-label {
+      color: $primary;
+      font-weight: 700;
+      transform: scale(1.05);
+      text-shadow: 0 1px 4px rgba($primary, 0.25);
+      
+      &::after {
+        width: 100%;
+      }
+    }
+    
+    &--completed &-label {
+      color: $text-primary;
+      font-weight: 600;
+      transform: scale(1.03);
+    }
+  }
+}
+
+// Enhanced Animations
+@keyframes activeGlow {
+  0%, 100% {
+    box-shadow: 
+      0 12px 36px rgba($primary, 0.45),
+      0 6px 18px rgba($primary, 0.35),
+      0 3px 10px rgba($primary, 0.25),
+      0 1px 4px rgba($primary, 0.15),
+      inset 0 2px 4px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+      0 0 0 6px rgba($primary, 0.08);
+  }
+  50% {
+    box-shadow: 
+      0 14px 42px rgba($primary, 0.5),
+      0 7px 21px rgba($primary, 0.4),
+      0 4px 12px rgba($primary, 0.3),
+      0 2px 6px rgba($primary, 0.2),
+      inset 0 2px 4px rgba(255, 255, 255, 0.4),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+      0 0 0 8px rgba($primary, 0.12);
+  }
+}
+
+@keyframes ripplePulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}

@@ -1,0 +1,139 @@
+@forward './variables';
+@use './variables' as *;
+
+// Glassmorphism Mixin
+@mixin glassmorphism {
+  background: $glass-background;
+  backdrop-filter: $glass-backdrop;
+  border: 1px solid $glass-border;
+  box-shadow: $shadow-lg;
+}
+
+// 3D Card Effect
+@mixin card-3d {
+  background: white;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-3d;
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-3d-hover;
+  }
+}
+
+// Gradient Background
+@mixin gradient-background {
+  background: linear-gradient(135deg, $background-gradient-start 0%, $background-gradient-end 100%);
+}
+
+// Responsive Typography
+@mixin responsive-text($mobile, $tablet, $desktop) {
+  font-size: $mobile;
+  
+  @media (min-width: $breakpoint-md) {
+    font-size: $tablet;
+  }
+  
+  @media (min-width: $breakpoint-lg) {
+    font-size: $desktop;
+  }
+}
+
+// Flex Center
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex Between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Button Reset
+@mixin button-reset {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Input Reset
+@mixin input-reset {
+  border: none;
+  background: white;
+  padding: $spacing-md;
+  font-family: inherit;
+  width: 100%;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Container
+@mixin container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+  
+  @media (min-width: $breakpoint-lg) {
+    padding: 0 $spacing-2xl;
+  }
+}
+
+// Animation Fade In
+@mixin fade-in {
+  animation: fadeIn $transition-slow;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Smooth Scroll
+@mixin smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Text Gradient
+@mixin text-gradient {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Loading Spinner
+@mixin spinner($size: 24px, $color: #2563eb) {
+  width: $size;
+  height: $size;
+  border: 3px solid rgba(37, 99, 235, 0.2);
+  border-top-color: $color;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

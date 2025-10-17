@@ -1,0 +1,61 @@
+@use '../../styles/mixins' as *;
+
+.header {
+  background: white;
+  box-shadow: $shadow-md;
+  position: sticky;
+  top: 0;
+  z-index: $z-dropdown;
+  
+  &__container {
+    @include container;
+    @include flex-between;
+    padding-top: $spacing-lg;
+    padding-bottom: $spacing-lg;
+  }
+  
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-primary;
+    text-decoration: none;
+    
+    &:hover {
+      color: $primary;
+    }
+  }
+  
+  &__logoIcon {
+    font-size: 1.5rem;
+  }
+  
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+  
+  &__link {
+    color: $text-secondary;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color $transition-fast;
+    
+    &:hover {
+      color: $primary;
+    }
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    &__nav {
+      gap: $spacing-md;
+    }
+    
+    &__link {
+      font-size: 0.875rem;
+    }
+  }
+}

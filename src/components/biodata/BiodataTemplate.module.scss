@@ -1,0 +1,154 @@
+@use '../../styles/mixins' as *;
+
+.template {
+  background: white;
+  padding: $spacing-3xl;
+  max-width: 210mm; // A4 width
+  margin: 0 auto;
+  font-family: 'Times New Roman', serif;
+  color: #000;
+  line-height: 1.6;
+  
+  @media print {
+    padding: 20mm;
+    max-width: 100%;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-md;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 0;
+  color: #000;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+}
+
+.section {
+  margin-bottom: $spacing-xl;
+}
+
+.sectionTitle {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: $spacing-md;
+  color: #000;
+  border: none;
+  padding: 0;
+  text-align: left;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  gap: $spacing-xs;
+  align-items: start;
+  text-align: left;
+  
+  .number {
+    font-weight: normal;
+    min-width: 25px;
+  }
+  
+  .label {
+    font-weight: bold;
+    min-width: 180px;
+  }
+  
+  .colon {
+    font-weight: bold;
+  }
+  
+  .value {
+    flex: 1;
+    padding-left: $spacing-xs;
+    
+    div {
+      margin-bottom: 2px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.educationTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: $spacing-md;
+  margin-left: 40px; // Align with other content
+  max-width: calc(100% - 40px);
+  
+  thead {
+    background-color: #f0f0f0;
+    
+    th {
+      border: 1px solid #000;
+      padding: $spacing-sm;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.4;
+      font-size: 0.9rem;
+    }
+  }
+  
+  tbody {
+    td {
+      border: 1px solid #000;
+      padding: $spacing-sm;
+      text-align: left;
+      vertical-align: top;
+      
+      &:first-child {
+        text-align: center;
+      }
+      
+      &:nth-child(5), // GPA/CGPA
+      &:nth-child(6) { // Passing Year
+        text-align: center;
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .template {
+    font-size: 11pt;
+  }
+  
+  .title {
+    font-size: 18pt;
+  }
+  
+  .sectionTitle {
+    font-size: 12pt;
+  }
+  
+  .field {
+    page-break-inside: avoid;
+  }
+  
+  .educationTable {
+    page-break-inside: avoid;
+    
+    thead {
+      display: table-header-group;
+    }
+  }
+}

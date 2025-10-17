@@ -1,0 +1,23 @@
+@use '../../../../styles/mixins' as *;
+
+.preview {
+  min-height: calc(100vh - 200px);
+  padding: $spacing-2xl 0;
+  
+  &__container {
+    @include container;
+  }
+  
+  &__actions {
+    @include flex-between;
+    margin-bottom: $spacing-xl;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+  }
+  
+  &__buttons {
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+}

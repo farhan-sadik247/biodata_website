@@ -1,0 +1,382 @@
+@use '../../../styles/mixins' as *;
+
+.authPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $background-gradient-start 0%, $background-gradient-end 100%);
+  padding: $spacing-xl;
+  perspective: 2000px;
+
+  &__container {
+    width: 100%;
+    max-width: 450px;
+  }
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 650px;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  &Flipped {
+    transform: rotateY(-180deg);
+  }
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: $radius-xl;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+  background: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba($primary, 0.03) 0%,
+      rgba($secondary, 0.03) 100%
+    );
+    pointer-events: none;
+  }
+
+  &Login {
+    transform: rotateY(0deg);
+    z-index: 2;
+  }
+
+  &Register {
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
+
+  &Content {
+    padding: $spacing-2xl;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: $spacing-sm;
+    animation: fadeInDown 0.6s ease-out;
+  }
+
+  .subtitle {
+    color: $text-secondary;
+    font-size: 1rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.label {
+  font-weight: 600;
+  color: $text-primary;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.input {
+  width: 100%;
+  padding: $spacing-md $spacing-lg;
+  border: 2px solid #e5e7eb;
+  border-radius: $radius-lg;
+  font-size: 1rem;
+  transition: all $transition-base;
+  background: white;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &::placeholder {
+    color: $text-light;
+  }
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .input {
+    padding-right: 3rem;
+  }
+}
+
+.eyeButton {
+  position: absolute;
+  right: $spacing-md;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-sm;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-fast;
+  border-radius: $radius-md;
+
+  &:hover {
+    background: rgba($primary, 0.1);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+.passwordStrength {
+  margin-top: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.strengthBar {
+  width: 100%;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strengthFill {
+  height: 100%;
+  transition: all $transition-base;
+  border-radius: 2px;
+}
+
+.strengthText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: right;
+  transition: color $transition-fast;
+}
+
+.passwordHints {
+  margin-top: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  
+  small {
+    font-size: 0.7rem;
+    color: $text-secondary;
+    line-height: 1.3;
+    
+    &:first-child {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+.error {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #dc2626;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $radius-lg;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-left: 4px solid #dc2626;
+  animation: shake 0.5s ease-in-out;
+}
+
+.footer {
+  text-align: center;
+  margin-top: $spacing-xl;
+  color: $text-secondary;
+  animation: fadeIn 1s ease-out;
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  .link {
+    color: $primary;
+    font-weight: 600;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+    transition: all $transition-fast;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $primary 0%, $secondary 100%);
+      transition: width $transition-base;
+    }
+
+    &:hover {
+      color: $secondary;
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+// Responsive Design
+@media (max-width: $breakpoint-md) {
+  .authPage {
+    padding: $spacing-lg;
+  }
+
+  .book {
+    height: auto;
+    min-height: 550px;
+  }
+
+  .page {
+    &Content {
+      padding: $spacing-xl;
+    }
+  }
+
+  .header {
+    .title {
+      font-size: 1.75rem;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .authPage {
+    padding: $spacing-md;
+  }
+
+  .page {
+    &Content {
+      padding: $spacing-lg;
+    }
+  }
+
+  .header {
+    margin-bottom: $spacing-lg;
+
+    .title {
+      font-size: 1.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+    }
+  }
+
+  .form {
+    gap: $spacing-md;
+  }
+
+  .input {
+    padding: $spacing-sm $spacing-md;
+  }
+}

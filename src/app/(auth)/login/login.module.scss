@@ -1,0 +1,86 @@
+@use '../../../styles/mixins' as *;
+
+.auth {
+  min-height: calc(100vh - 200px);
+  @include flex-center;
+  padding: $spacing-2xl 0;
+  
+  &__container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 $spacing-lg;
+  }
+  
+  &__card {
+    @include fade-in;
+  }
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+  }
+  
+  &__title {
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__subtitle {
+    color: $text-secondary;
+    margin-bottom: 0;
+  }
+  
+  &__form {
+    margin-bottom: $spacing-xl;
+  }
+  
+  &__footer {
+    text-align: center;
+    padding-top: $spacing-xl;
+    border-top: 1px solid #e5e7eb;
+    
+    p {
+      margin: 0;
+      color: $text-secondary;
+    }
+  }
+  
+  &__link {
+    color: $primary;
+    font-weight: 600;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.passwordStrength {
+  margin-top: $spacing-sm;
+  
+  &__bar {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: $radius-full;
+    overflow: hidden;
+    margin-bottom: $spacing-xs;
+  }
+  
+  &__fill {
+    height: 100%;
+    transition: all $transition-base;
+    border-radius: $radius-full;
+  }
+  
+  &__bar[data-strength="0"] &__fill { width: 0%; background: #ef4444; }
+  &__bar[data-strength="1"] &__fill { width: 20%; background: #ef4444; }
+  &__bar[data-strength="2"] &__fill { width: 40%; background: #f59e0b; }
+  &__bar[data-strength="3"] &__fill { width: 60%; background: #eab308; }
+  &__bar[data-strength="4"] &__fill { width: 80%; background: #84cc16; }
+  &__bar[data-strength="5"] &__fill { width: 100%; background: #10b981; }
+  
+  &__label {
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+}

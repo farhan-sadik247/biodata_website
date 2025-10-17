@@ -1,0 +1,48 @@
+@use '../../styles/mixins' as *;
+
+.footer {
+  background: white;
+  margin-top: $spacing-3xl;
+  padding: $spacing-2xl 0;
+  border-top: 1px solid #e5e7eb;
+  
+  &__container {
+    @include container;
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+  }
+  
+  &__text {
+    color: $text-secondary;
+    margin: 0;
+  }
+  
+  &__links {
+    display: flex;
+    gap: $spacing-lg;
+  }
+  
+  &__link {
+    color: $text-secondary;
+    text-decoration: none;
+    transition: color $transition-fast;
+    
+    &:hover {
+      color: $primary;
+    }
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    &__container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    &__links {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+}

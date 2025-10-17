@@ -1,0 +1,132 @@
+'use client';
+
+import React from 'react';
+import { formatDate } from '@/lib/utils';
+import styles from './BiodataTemplate.module.scss';
+
+const BiodataTemplate = React.forwardRef(({ biodata }, ref) => {
+  return (
+    <div ref={ref} className={styles.template}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>BIO-DATA</h1>
+      </div>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Personal Information</h2>
+        <div className={styles.grid}>
+          {biodata.personalInfo?.fullName && <div><strong>Full Name:</strong> {biodata.personalInfo.fullName}</div>}
+          {biodata.personalInfo?.latestDegree && <div><strong>Latest Degree:</strong> {biodata.personalInfo.latestDegree}</div>}
+          {biodata.personalInfo?.dateOfBirth && <div><strong>Date of Birth:</strong> {formatDate(biodata.personalInfo.dateOfBirth)}</div>}
+          {biodata.personalInfo?.height && <div><strong>Height:</strong> {biodata.personalInfo.height}</div>}
+          {biodata.personalInfo?.weight && <div><strong>Weight:</strong> {biodata.personalInfo.weight}</div>}
+          {biodata.personalInfo?.bloodGroup && <div><strong>Blood Group:</strong> {biodata.personalInfo.bloodGroup}</div>}
+          {biodata.personalInfo?.nationality && <div><strong>Nationality:</strong> {biodata.personalInfo.nationality}</div>}
+          {biodata.personalInfo?.religion && <div><strong>Religion:</strong> {biodata.personalInfo.religion}</div>}
+          {biodata.personalInfo?.maritalStatus && <div><strong>Marital Status:</strong> {biodata.personalInfo.maritalStatus}</div>}
+          {biodata.personalInfo?.contactNumber && <div><strong>Contact:</strong> {biodata.personalInfo.contactNumber}</div>}
+          {biodata.personalInfo?.email && <div><strong>Email:</strong> {biodata.personalInfo.email}</div>}
+        </div>
+        {biodata.personalInfo?.presentAddress && (
+          <div className={styles.fullWidth}>
+            <strong>Present Address:</strong>{' '}
+            {[
+              biodata.personalInfo.presentAddress.village,
+              biodata.personalInfo.presentAddress.postOffice,
+              biodata.personalInfo.presentAddress.upazila,
+              biodata.personalInfo.presentAddress.district,
+              biodata.personalInfo.presentAddress.division,
+            ].filter(Boolean).join(', ')}
+            {biodata.personalInfo.presentAddress.fullAddress && ` - ${biodata.personalInfo.presentAddress.fullAddress}`}
+          </div>
+        )}
+        {biodata.personalInfo?.permanentAddress && (
+          <div className={styles.fullWidth}>
+            <strong>Permanent Address:</strong>{' '}
+            {[
+              biodata.personalInfo.permanentAddress.village,
+              biodata.personalInfo.permanentAddress.postOffice,
+              biodata.personalInfo.permanentAddress.upazila,
+              biodata.personalInfo.permanentAddress.district,
+              biodata.personalInfo.permanentAddress.division,
+            ].filter(Boolean).join(', ')}
+            {biodata.personalInfo.permanentAddress.fullAddress && ` - ${biodata.personalInfo.permanentAddress.fullAddress}`}
+          </div>
+        )}
+      </section>
+
+      {biodata.familyInfo && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Family Information</h2>
+          {biodata.familyInfo.father && (
+            <div className={styles.subsection}>
+              <h3>Father</h3>
+              <div className={styles.grid}>
+                {biodata.familyInfo.father.name && <div><strong>Name:</strong> {biodata.familyInfo.father.name}</div>}
+                {biodata.familyInfo.father.occupation && <div><strong>Occupation:</strong> {biodata.familyInfo.father.occupation}</div>}
+                {biodata.familyInfo.father.designation && <div><strong>Designation:</strong> {biodata.familyInfo.father.designation}</div>}
+                {biodata.familyInfo.father.designatedArea && <div><strong>Area:</strong> {biodata.familyInfo.father.designatedArea}</div>}
+              </div>
+            </div>
+          )}
+          {biodata.familyInfo.mother && (
+            <div className={styles.subsection}>
+              <h3>Mother</h3>
+              <div className={styles.grid}>
+                {biodata.familyInfo.mother.name && <div><strong>Name:</strong> {biodata.familyInfo.mother.name}</div>}
+                {biodata.familyInfo.mother.occupation && <div><strong>Occupation:</strong> {biodata.familyInfo.mother.occupation}</div>}
+                {biodata.familyInfo.mother.designation && <div><strong>Designation:</strong> {biodata.familyInfo.mother.designation}</div>}
+                {biodata.familyInfo.mother.designatedArea && <div><strong>Area:</strong> {biodata.familyInfo.mother.designatedArea}</div>}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
+      {biodata.educationInfo && biodata.educationInfo.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Education</h2>
+          {biodata.educationInfo.map((edu, index) => (
+            <div key={index} className={styles.subsection}>
+              <div className={styles.grid}>
+                {edu.degree && <div><strong>Degree:</strong> {edu.degree}</div>}
+                {edu.institution && <div><strong>Institution:</strong> {edu.institution}</div>}
+                {edu.passingYear && <div><strong>Year:</strong> {edu.passingYear}</div>}
+                {edu.result && <div><strong>Result:</strong> {edu.result}</div>}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {biodata.professionalInfo && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Professional Information</h2>
+          <div className={styles.grid}>
+            {biodata.professionalInfo.currentPosition && <div><strong>Position:</strong> {biodata.professionalInfo.currentPosition}</div>}
+            {biodata.professionalInfo.organization && <div><strong>Organization:</strong> {biodata.professionalInfo.organization}</div>}
+            {biodata.professionalInfo.experience && <div><strong>Experience:</strong> {biodata.professionalInfo.experience}</div>}
+          </div>
+        </section>
+      )}
+
+      {biodata.additionalInfo && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Additional Information</h2>
+          {biodata.additionalInfo.hobbies && biodata.additionalInfo.hobbies.length > 0 && (
+            <div><strong>Hobbies:</strong> {biodata.additionalInfo.hobbies.join(', ')}</div>
+          )}
+          {biodata.additionalInfo.skills && biodata.additionalInfo.skills.length > 0 && (
+            <div><strong>Skills:</strong> {biodata.additionalInfo.skills.join(', ')}</div>
+          )}
+          {biodata.additionalInfo.languages && biodata.additionalInfo.languages.length > 0 && (
+            <div><strong>Languages:</strong> {biodata.additionalInfo.languages.join(', ')}</div>
+          )}
+        </section>
+      )}
+    </div>
+  );
+});
+
+BiodataTemplate.displayName = 'BiodataTemplate';
+
+export default BiodataTemplate;

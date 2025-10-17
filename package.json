@@ -1,0 +1,35 @@
+{
+  "name": "biodata-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "axios": "^1.12.2",
+    "bcryptjs": "^3.0.2",
+    "bd-geodata": "^1.0.7",
+    "framer-motion": "^12.23.24",
+    "html2canvas": "^1.4.1",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "jspdf": "^3.0.3",
+    "mongoose": "^8.19.1",
+    "next": "^15.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.65.0",
+    "sass": "^1.93.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "24.8.1",
+    "@types/react": "19.2.2",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "^15.5.6"
+  }
+}
