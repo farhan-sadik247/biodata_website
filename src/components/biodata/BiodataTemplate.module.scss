@@ -8,6 +8,22 @@
   font-family: 'Times New Roman', serif;
   color: #000;
   line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  
+  // Mobile responsive styles
+  @media (max-width: 768px) {
+    padding: $spacing-lg;
+    max-width: 100%;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: $spacing-md;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
   
   @media print {
     padding: 20mm;
@@ -19,6 +35,16 @@
   text-align: center;
   margin-bottom: $spacing-2xl;
   padding-bottom: $spacing-md;
+  
+  @media (max-width: 768px) {
+    margin-bottom: $spacing-xl;
+    padding-bottom: $spacing-sm;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: $spacing-lg;
+    padding: 0 $spacing-sm $spacing-xs;
+  }
 }
 
 .title {
@@ -28,12 +54,45 @@
   margin: 0;
   color: #000;
   background: none;
+  background-clip: unset;
   -webkit-background-clip: unset;
   -webkit-text-fill-color: unset;
+  word-break: keep-all;
+  hyphens: none;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    padding: 0 $spacing-sm;
+    word-wrap: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  @media (max-width: 360px) {
+    font-size: 1.1rem;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
 }
 
 .section {
   margin-bottom: $spacing-xl;
+  
+  @media (max-width: 768px) {
+    margin-bottom: $spacing-lg;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: $spacing-md;
+  }
 }
 
 .sectionTitle {
@@ -44,6 +103,16 @@
   border: none;
   padding: 0;
   text-align: left;
+  word-wrap: break-word;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: $spacing-sm;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+  }
 }
 
 .infoList {
@@ -59,23 +128,59 @@
   align-items: start;
   text-align: left;
   
+  // Mobile responsive grid
+  @media (max-width: 768px) {
+    grid-template-columns: auto auto auto 1fr;
+    gap: 4px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  
   .number {
     font-weight: normal;
     min-width: 25px;
+    
+    @media (max-width: 480px) {
+      display: none; // Hide numbers on very small screens
+    }
   }
   
   .label {
     font-weight: bold;
     min-width: 180px;
+    word-break: break-word;
+    
+    @media (max-width: 768px) {
+      min-width: 120px;
+    }
+    
+    @media (max-width: 480px) {
+      min-width: auto;
+      margin-bottom: 2px;
+    }
   }
   
   .colon {
     font-weight: bold;
+    
+    @media (max-width: 480px) {
+      display: none; // Hide colons on mobile for cleaner look
+    }
   }
   
   .value {
     flex: 1;
     padding-left: $spacing-xs;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    
+    @media (max-width: 480px) {
+      padding-left: 0;
+      margin-bottom: $spacing-sm;
+    }
     
     div {
       margin-bottom: 2px;
@@ -87,42 +192,219 @@
   }
 }
 
-.educationTable {
-  width: 100%;
-  border-collapse: collapse;
+// Modern Education Cards Layout
+.educationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-lg;
   margin-top: $spacing-md;
-  margin-left: 40px; // Align with other content
-  max-width: calc(100% - 40px);
+  margin-left: 40px;
   
-  thead {
-    background-color: #f0f0f0;
+  @media (max-width: 768px) {
+    margin-left: 0;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+  
+  @media (max-width: 480px) {
+    gap: $spacing-sm;
+  }
+}
+
+.educationCard {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: $spacing-lg;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    padding: $spacing-md;
+    border-radius: 6px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: $spacing-sm;
+    border-radius: 4px;
+  }
+  
+  @media print {
+    background: white;
+    box-shadow: none;
+    border: 1px solid #000;
+    border-radius: 0;
+    transform: none;
+    page-break-inside: avoid;
+  }
+}
+
+.educationHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-sm;
+  border-bottom: 2px solid #007acc;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-xs;
+  }
+}
+
+.educationNumber {
+  background: linear-gradient(135deg, #007acc, #005a9f);
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  min-width: 40px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 122, 204, 0.3);
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+  
+  @media print {
+    background: #000;
+    box-shadow: none;
+  }
+}
+
+.educationDegree {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+}
+
+.educationDetails {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  
+  @media (max-width: 768px) {
+    gap: $spacing-sm;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: $spacing-xs;
+  }
+}
+
+.educationDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  
+  .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     
-    th {
-      border: 1px solid #000;
-      padding: $spacing-sm;
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.4;
-      font-size: 0.9rem;
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
     }
   }
   
-  tbody {
-    td {
-      border: 1px solid #000;
-      padding: $spacing-sm;
-      text-align: left;
-      vertical-align: top;
-      
-      &:first-child {
+  .value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333;
+    word-break: break-word;
+    
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+    }
+    
+    &.empty {
+      color: #999;
+      font-style: italic;
+    }
+  }
+}
+
+// Fallback: Simple clean table for print
+@media print {
+  .educationGrid {
+    display: none;
+  }
+  
+  .educationTablePrint {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: $spacing-md;
+    margin-left: 40px;
+    max-width: calc(100% - 40px);
+    
+    thead {
+      th {
+        border: 1px solid #000;
+        padding: 8px 4px;
+        font-weight: bold;
         text-align: center;
-      }
-      
-      &:nth-child(5), // GPA/CGPA
-      &:nth-child(6) { // Passing Year
-        text-align: center;
+        font-size: 10pt;
+        background: #f0f0f0;
       }
     }
+    
+    tbody {
+      td {
+        border: 1px solid #000;
+        padding: 6px 4px;
+        text-align: left;
+        vertical-align: top;
+        font-size: 9pt;
+        
+        &:first-child {
+          text-align: center;
+        }
+        
+        &:nth-child(5), 
+        &:nth-child(6) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+// Hide print table by default
+.educationTablePrint {
+  display: none;
+}
+
+// Education section wrapper
+.educationSection {
+  margin-top: $spacing-md;
+  
+  @media (max-width: 768px) {
+    margin-top: $spacing-sm;
   }
 }
 
@@ -149,6 +431,109 @@
     
     thead {
       display: table-header-group;
+    }
+  }
+}
+
+// Export Mode - Override all mobile styles for consistent A4 export
+:global(.export-mode) {
+  .template {
+    padding: 20mm !important;
+    max-width: 210mm !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
+    margin: 0 auto !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+    background: white !important;
+  }
+  
+  .header {
+    margin-bottom: $spacing-2xl !important;
+    padding-bottom: $spacing-md !important;
+  }
+  
+  .title {
+    font-size: 18pt !important;
+    line-height: 1.3 !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+  }
+  
+  .section {
+    margin-bottom: $spacing-xl !important;
+  }
+  
+  .sectionTitle {
+    font-size: 12pt !important;
+    margin-bottom: $spacing-md !important;
+  }
+  
+  .field {
+    display: grid !important;
+    grid-template-columns: auto auto auto 1fr !important;
+    gap: $spacing-xs !important;
+    
+    .number {
+      display: inline !important;
+      min-width: 25px !important;
+    }
+    
+    .label {
+      min-width: 180px !important;
+      margin-bottom: 0 !important;
+    }
+    
+    .colon {
+      display: inline !important;
+    }
+    
+    .value {
+      padding-left: $spacing-xs !important;
+      margin-bottom: 0 !important;
+    }
+  }
+  
+  // Force desktop education layout for export
+  .educationGrid {
+    display: none !important;
+  }
+  
+  .educationTablePrint {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: $spacing-md !important;
+    margin-left: 40px !important;
+    max-width: calc(100% - 40px) !important;
+    font-size: 9pt !important;
+    
+    thead th {
+      border: 1px solid #000 !important;
+      padding: 8px 4px !important;
+      font-weight: bold !important;
+      text-align: center !important;
+      background: #f0f0f0 !important;
+      font-size: 9pt !important;
+    }
+    
+    tbody td {
+      border: 1px solid #000 !important;
+      padding: 6px 4px !important;
+      text-align: left !important;
+      vertical-align: top !important;
+      font-size: 9pt !important;
+      
+      &:first-child {
+        text-align: center !important;
+      }
+      
+      &:nth-child(5), 
+      &:nth-child(6) {
+        text-align: center !important;
+      }
     }
   }
 }

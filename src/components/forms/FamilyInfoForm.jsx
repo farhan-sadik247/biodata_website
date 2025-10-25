@@ -76,6 +76,8 @@ const FamilyInfoForm = () => {
                 <option value="">Select</option>
                 <option value="Brother">Brother</option>
                 <option value="Sister">Sister</option>
+                <option value="Brother-in-law">Brother-in-law</option>
+                <option value="Sister-in-law">Sister-in-law</option>
               </select>
             </div>
           </div>

@@ -53,26 +53,70 @@ export default function PreviewPage({ params }) {
     
     setExporting(true);
     try {
+      // Force desktop/print mode for export
+      const originalClass = templateRef.current.className;
+      const originalStyle = templateRef.current.style.cssText;
+      
+      // Apply desktop export styles
+      templateRef.current.classList.add('export-mode');
+      templateRef.current.style.width = '210mm';
+      templateRef.current.style.minWidth = '210mm';
+      templateRef.current.style.maxWidth = '210mm';
+      templateRef.current.style.padding = '20mm';
+      templateRef.current.style.fontSize = '11pt';
+      templateRef.current.style.lineHeight = '1.6';
+      templateRef.current.style.backgroundColor = 'white';
+      templateRef.current.style.height = 'auto';
+      
+      // Wait for styles to apply
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
+      // Get actual content dimensions
+      const elementHeight = templateRef.current.scrollHeight;
+      const elementWidth = templateRef.current.scrollWidth;
+      
       const canvas = await html2canvas(templateRef.current, {
         scale: 2,
         useCORS: true,
         logging: false,
+        width: elementWidth,
+        height: elementHeight,
+        windowWidth: 1200, // Wider window for better rendering
+        windowHeight: elementHeight,
       });
       
+      // Restore original styles
+      templateRef.current.className = originalClass;
+      templateRef.current.style.cssText = originalStyle;
+      
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+      
+      // Create custom PDF size to fit content
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 10;
       
-      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      // Convert pixels to mm (assuming 96 DPI)
+      const pdfWidth = (imgWidth * 25.4) / 96; // Convert to mm
+      const pdfHeight = (imgHeight * 25.4) / 96; // Convert to mm
+      
+      // Create PDF with custom dimensions
+      const pdf = new jsPDF({
+        orientation: pdfHeight > pdfWidth ? 'portrait' : 'landscape',
+        unit: 'mm',
+        format: [pdfWidth, pdfHeight]
+      });
+      
+      // Add image to fill entire page
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      
       pdf.save(generateFilename(biodata?.personalInfo?.fullName, 'pdf'));
     } catch (error) {
+      console.error('Export PDF error:', error);
       alert('Failed to export PDF');
+      // Restore styles in case of error
+      if (templateRef.current) {
+        templateRef.current.classList.remove('export-mode');
+      }
     } finally {
       setExporting(false);
     }
@@ -83,18 +127,53 @@ export default function PreviewPage({ params }) {
     
     setExporting(true);
     try {
+      // Force desktop/print mode for export
+      const originalClass = templateRef.current.className;
+      const originalStyle = templateRef.current.style.cssText;
+      
+      // Apply desktop export styles for PNG (capture full content)
+      templateRef.current.classList.add('export-mode');
+      templateRef.current.style.width = '210mm';
+      templateRef.current.style.minWidth = '210mm';
+      templateRef.current.style.maxWidth = '210mm';
+      templateRef.current.style.padding = '20mm';
+      templateRef.current.style.fontSize = '11pt';
+      templateRef.current.style.lineHeight = '1.6';
+      templateRef.current.style.backgroundColor = 'white';
+      templateRef.current.style.height = 'auto';
+      
+      // Wait for styles to apply
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
+      // Get actual content dimensions for PNG (no height limit)
+      const elementHeight = templateRef.current.scrollHeight;
+      const elementWidth = templateRef.current.scrollWidth;
+      
       const canvas = await html2canvas(templateRef.current, {
         scale: 2,
         useCORS: true,
         logging: false,
+        width: elementWidth,
+        height: elementHeight,
+        windowWidth: 1200,
+        windowHeight: elementHeight,
       });
+      
+      // Restore original styles
+      templateRef.current.className = originalClass;
+      templateRef.current.style.cssText = originalStyle;
       
       const link = document.createElement('a');
       link.download = generateFilename(biodata?.personalInfo?.fullName, 'png');
       link.href = canvas.toDataURL('image/png');
       link.click();
     } catch (error) {
+      console.error('Export PNG error:', error);
       alert('Failed to export PNG');
+      // Restore styles in case of error
+      if (templateRef.current) {
+        templateRef.current.classList.remove('export-mode');
+      }
     } finally {
       setExporting(false);
     }

@@ -123,7 +123,7 @@ const BiodataTemplate = React.forwardRef(({ biodata }, ref) => {
         </div>
       </section>
 
-      {/* Educational Qualification Table */}
+      {/* Educational Qualification - Modern Card Layout */}
       {biodata.educationInfo && biodata.educationInfo.length > 0 && (
         <section className={styles.section}>
           <div className={styles.field}>
@@ -131,34 +131,92 @@ const BiodataTemplate = React.forwardRef(({ biodata }, ref) => {
             <span className={styles.label}>Educational Qualification:</span>
           </div>
           
-          <table className={styles.educationTable}>
-            <thead>
-              <tr>
-                <th>SL<br/>No</th>
-                <th>Name of<br/>Examination</th>
-                <th>Group/<br/>Subject</th>
-                <th>Educational<br/>Institute</th>
-                <th>GPA/<br/>CGPA</th>
-                <th>Passing<br/>Year</th>
-                <th>Board/<br/>University</th>
-              </tr>
-            </thead>
-            <tbody>
+          <div className={styles.educationSection}>
+            {/* Modern Card Layout for Screen */}
+            <div className={styles.educationGrid}>
               {biodata.educationInfo
                 .filter(edu => edu.degree || edu.subject || edu.institution) // Only show entries with data
                 .map((edu, index) => (
-                <tr key={index}>
-                  <td>{String(index + 1).padStart(2, '0')}</td>
-                  <td>{edu.degree || ''}</td>
-                  <td>{edu.subject || edu.group || ''}</td>
-                  <td>{edu.institution || ''}</td>
-                  <td>{edu.result || edu.gpa || edu.cgpa || ''}</td>
-                  <td>{edu.passingYear || ''}</td>
-                  <td>{edu.board || edu.university || ''}</td>
-                </tr>
+                <div key={index} className={styles.educationCard}>
+                  <div className={styles.educationHeader}>
+                    <span className={styles.educationNumber}>
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h4 className={styles.educationDegree}>
+                      {edu.degree || 'Degree'}
+                    </h4>
+                  </div>
+                  
+                  <div className={styles.educationDetails}>
+                    <div className={styles.educationDetail}>
+                      <span className={styles.label}>Group/Subject</span>
+                      <span className={`${styles.value} ${!(edu.subject || edu.group) ? styles.empty : ''}`}>
+                        {edu.subject || edu.group || 'Not specified'}
+                      </span>
+                    </div>
+                    
+                    <div className={styles.educationDetail}>
+                      <span className={styles.label}>Institute</span>
+                      <span className={`${styles.value} ${!edu.institution ? styles.empty : ''}`}>
+                        {edu.institution || 'Not specified'}
+                      </span>
+                    </div>
+                    
+                    <div className={styles.educationDetail}>
+                      <span className={styles.label}>GPA/CGPA</span>
+                      <span className={`${styles.value} ${!(edu.result || edu.gpa || edu.cgpa) ? styles.empty : ''}`}>
+                        {edu.result || edu.gpa || edu.cgpa || 'Not specified'}
+                      </span>
+                    </div>
+                    
+                    <div className={styles.educationDetail}>
+                      <span className={styles.label}>Passing Year</span>
+                      <span className={`${styles.value} ${!edu.passingYear ? styles.empty : ''}`}>
+                        {edu.passingYear || 'Not specified'}
+                      </span>
+                    </div>
+                    
+                    <div className={styles.educationDetail} style={{gridColumn: '1 / -1'}}>
+                      <span className={styles.label}>Board/University</span>
+                      <span className={`${styles.value} ${!(edu.board || edu.university) ? styles.empty : ''}`}>
+                        {edu.board || edu.university || 'Not specified'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
+            </div>
+            
+            {/* Clean Table for Print */}
+            <table className={styles.educationTablePrint}>
+              <thead>
+                <tr>
+                  <th>SL No</th>
+                  <th>Examination</th>
+                  <th>Group/Subject</th>
+                  <th>Institute</th>
+                  <th>GPA/CGPA</th>
+                  <th>Year</th>
+                  <th>Board/University</th>
+                </tr>
+              </thead>
+              <tbody>
+                {biodata.educationInfo
+                  .filter(edu => edu.degree || edu.subject || edu.institution)
+                  .map((edu, index) => (
+                  <tr key={index}>
+                    <td>{String(index + 1).padStart(2, '0')}</td>
+                    <td>{edu.degree || ''}</td>
+                    <td>{edu.subject || edu.group || ''}</td>
+                    <td>{edu.institution || ''}</td>
+                    <td>{edu.result || edu.gpa || edu.cgpa || ''}</td>
+                    <td>{edu.passingYear || ''}</td>
+                    <td>{edu.board || edu.university || ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
       )}
 

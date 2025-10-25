@@ -53,7 +53,7 @@ export const familyInfoSchema = z.object({
   }).optional(),
   siblings: z.array(z.object({
     name: z.string().optional(),
-    relation: z.enum(['Brother', 'Sister']).optional(),
+    relation: z.enum(['Brother', 'Sister', 'Brother-in-law', 'Sister-in-law']).optional(),
     occupation: z.string().optional(),
     designation: z.string().optional(),
     designatedArea: z.string().optional(),
